@@ -6,21 +6,27 @@ const galleryConteiner = document.querySelector('.gallery');
 //Пустой объект, куда будет записываться ссылка на модальное окно
 let instance = {};
 
+let isModalOpen = false;
+
 //Обработчик нажатий на элемент галереи
 galleryConteiner.addEventListener('click', (event) => {
 	event.preventDefault(); //запрет действия по умолчанию для ссылки
 
 	const bigImageUrl = event.target.getAttribute('data-source');
 
-	instance = basicLightbox.create(`<img src="${bigImageUrl}"/>`, { closable: false });
+	instance = basicLightbox.create(`<img src="${bigImageUrl}"/>`, { closable: true });
 
 	instance.show();
+
+	isModalOpen = instance.visible();
 });
 
 //Обработчик нажания на клавишу Escape
 document.addEventListener('keydown', (event) => {
-	if (event.code === 'Escape') {
-		instance.close();
+	if (isModalOpen) {
+		if (event.code === 'Escape') {
+			instance.close();
+		}
 	}
 });
 
