@@ -6,6 +6,7 @@ const galleryConteiner = document.querySelector('.gallery');
 //Пустой объект, куда будет записываться ссылка на модальное окно
 let instance = {};
 
+//Переменная-флаг "открыто ли модальное окно?"
 let isModalOpen = false;
 
 //Обработчик нажатий на элемент галереи
