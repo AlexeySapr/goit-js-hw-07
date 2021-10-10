@@ -1,41 +1,43 @@
-import { galleryItems } from './gallery-items.js';
+import { galleryItems } from "./gallery-items.js";
 
 //Получаем ссылку на нужный элемент
-const galleryConteiner = document.querySelector('.gallery');
+const galleryConteiner = document.querySelector(".gallery");
 
 //Пустой объект, куда будет записываться ссылка на модальное окно
 let instance = {};
 
-//Переменная-флаг "открыто ли модальное окно?"
-let isModalOpen = false;
-
 //Обработчик нажатий на элемент галереи
-galleryConteiner.addEventListener('click', (event) => {
-	event.preventDefault(); //запрет действия по умолчанию для ссылки
+galleryConteiner.addEventListener("click", onClickGalleryItem);
 
-	const bigImageUrl = event.target.getAttribute('data-source');
+//при нажатии на элемент в галерее
+function onClickGalleryItem(event) {
+  event.preventDefault(); //запрет действия по умолчанию для ссылки
 
-	instance = basicLightbox.create(`<img src="${bigImageUrl}"/>`, { closable: true });
+  const bigImageUrl = event.target.getAttribute("data-source");
 
-	instance.show();
+  instance = basicLightbox.create(`<img src="${bigImageUrl}"/>`, {
+    closable: true,
+  });
 
-	isModalOpen = instance.visible();
-});
+  instance.show();
 
-//Обработчик нажания на клавишу Escape
-document.addEventListener('keydown', (event) => {
-	if (isModalOpen) {
-		if (event.code === 'Escape') {
-			instance.close();
-		}
-	}
-});
+  //Обработчик нажания на клавишу Escape
+  document.addEventListener("keydown", onEscPressed);
+}
+
+//при нажатии на Esc
+function onEscPressed(event) {
+  if (event.code === "Escape") {
+    instance.close();
+  }
+  console.log("test");
+}
 
 //создание разметки
 function createGallery(galleryItems) {
-	const markup = galleryItems
-		.map(({ preview, original, description }) => {
-			return `<div class="gallery__item">
+  const markup = galleryItems
+    .map(({ preview, original, description }) => {
+      return `<div class="gallery__item">
 						<a class="gallery__link" href="${original}">
 							<img
 							class="gallery__image"
@@ -45,24 +47,12 @@ function createGallery(galleryItems) {
 							/>
 						</a>
 					</div>`;
-		})
-		.join('');
+    })
+    .join("");
 
-	return markup;
+  return markup;
 }
 
 //рендер разметки
-galleryConteiner.insertAdjacentHTML('beforeend', createGallery(galleryItems));
-
-/***************** другой вариант создания и рендера разметки *******************/
-
-// for (const { preview, original, description } of galleryItems) {
-// 	galleryConteiner.insertAdjacentHTML(
-// 		'beforeend',
-// 		`<div class="gallery__item">
-//   			<a class="gallery__link" href="${original}">
-//     			<img class="gallery__image" src="${preview}" data-source="${original}" alt="${description}" />
-//   			</a>
-// 		</div>`
-// 	);
-// }
+// galleryConteiner.insertAdjacentHTML('beforeend', createGallery(galleryItems));
+galleryConteiner.innerHTML = createGallery(galleryItems);
