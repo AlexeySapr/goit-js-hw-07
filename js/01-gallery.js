@@ -16,12 +16,21 @@ function onClickGalleryItem(event) {
 
   modal = basicLightbox.create(`<img src="${bigImageUrl}"/>`, {
     closable: true,
+    onShow: addEscListener,
+    onClose: removeEscListener,
   });
 
   modal.show();
+}
 
-  //Обработчик нажания на клавишу Escape
+//добавляет слушателя нажатий Esc
+function addEscListener() {
   document.addEventListener("keydown", onEscPressed);
+}
+
+//удаляет слушателя нажатий Esc
+function removeEscListener() {
+  document.removeEventListener("keydown", onEscPressed);
 }
 
 //при нажатии на Esc
