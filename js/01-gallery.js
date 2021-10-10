@@ -12,15 +12,6 @@ galleryConteiner.addEventListener("click", onClickGalleryItem);
 //при нажатии на элемент в галерее
 function onClickGalleryItem(event) {
   event.preventDefault(); //запрет действия по умолчанию для ссылки
-
-  showModal(event);
-
-  //Обработчик нажания на клавишу Escape
-  document.addEventListener("keydown", onEscPressed);
-}
-
-//показать модалку
-function showModal(event) {
   const bigImageUrl = event.target.getAttribute("data-source");
 
   modal = basicLightbox.create(`<img src="${bigImageUrl}"/>`, {
@@ -28,6 +19,9 @@ function showModal(event) {
   });
 
   modal.show();
+
+  //Обработчик нажания на клавишу Escape
+  document.addEventListener("keydown", onEscPressed);
 }
 
 //при нажатии на Esc
