@@ -4,7 +4,7 @@ import { galleryItems } from "./gallery-items.js";
 const galleryConteiner = document.querySelector(".gallery");
 
 //Пустой объект, куда будет записываться ссылка на модальное окно
-let instance = {};
+let modal = {};
 
 //Обработчик нажатий на элемент галереи
 galleryConteiner.addEventListener("click", onClickGalleryItem);
@@ -15,11 +15,11 @@ function onClickGalleryItem(event) {
 
   const bigImageUrl = event.target.getAttribute("data-source");
 
-  instance = basicLightbox.create(`<img src="${bigImageUrl}"/>`, {
+  modal = basicLightbox.create(`<img src="${bigImageUrl}"/>`, {
     closable: true,
   });
 
-  instance.show();
+  modal.show();
 
   //Обработчик нажания на клавишу Escape
   document.addEventListener("keydown", onEscPressed);
@@ -28,9 +28,8 @@ function onClickGalleryItem(event) {
 //при нажатии на Esc
 function onEscPressed(event) {
   if (event.code === "Escape") {
-    instance.close();
+    modal.close();
   }
-  console.log("test");
 }
 
 //создание разметки
