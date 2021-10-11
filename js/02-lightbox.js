@@ -23,6 +23,7 @@ function createGallery(galleryItems) {
 //рендер разметки
 galleryConteiner.innerHTML = createGallery(galleryItems);
 
+//инициализация SimpleLightbox
 const lightbox = new SimpleLightbox(".gallery a", {
   /* options */
   captionsData: "alt",
